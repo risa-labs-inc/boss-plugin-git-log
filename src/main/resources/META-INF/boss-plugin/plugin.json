@@ -1,0 +1,21 @@
+{
+  "manifestVersion": 1,
+  "pluginId": "ai.rever.boss.plugin.dynamic.gitlog",
+  "displayName": "Git Log (Dynamic)",
+  "version": "1.0.0",
+  "apiVersion": "1.0",
+  "mainClass": "ai.rever.boss.plugin.dynamic.gitlog.GitLogDynamicPlugin",
+  "type": "panel",
+  "description": "View commit history with graph visualization",
+  "author": "Risa Labs",
+  "url": "https://github.com/risa-labs-inc/boss-plugin-git-log",
+  "panel": {
+    "position": "left_bottom",
+    "priority": 15
+  },
+  "sandbox": {
+    "maxThreads": 4,
+    "maxRestartAttempts": 3,
+    "heartbeatIntervalMs": 5000
+  }
+}
