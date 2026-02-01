@@ -1,6 +1,7 @@
 package ai.rever.boss.plugin.dynamic.gitlog
 
 import ai.rever.boss.plugin.api.DynamicPlugin
+import ai.rever.boss.plugin.api.GitDataProvider
 import ai.rever.boss.plugin.api.PluginContext
 
 /**
@@ -16,9 +17,13 @@ class GitLogDynamicPlugin : DynamicPlugin {
     override val author: String = "Risa Labs"
     override val url: String = "https://github.com/risa-labs-inc/boss-plugin-git-log"
 
+    private var gitDataProvider: GitDataProvider? = null
+
     override fun register(context: PluginContext) {
+        gitDataProvider = context.gitDataProvider
+
         context.panelRegistry.registerPanel(GitLogInfo) { ctx, panelInfo ->
-            GitLogComponent(ctx, panelInfo)
+            GitLogComponent(ctx, panelInfo, gitDataProvider)
         }
     }
 }
