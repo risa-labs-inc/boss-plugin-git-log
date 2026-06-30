@@ -3,12 +3,8 @@ package ai.rever.boss.plugin.dynamic.gitlog
 import ai.rever.boss.plugin.api.GitCommitInfoData
 import ai.rever.boss.plugin.scrollbar.getPanelScrollbarConfig
 import ai.rever.boss.plugin.scrollbar.lazyListScrollbar
-import ai.rever.boss.plugin.ui.BossDarkAccent
-import ai.rever.boss.plugin.ui.BossDarkBackground
-import ai.rever.boss.plugin.ui.BossDarkBorder
-import ai.rever.boss.plugin.ui.BossDarkTextPrimary
-import ai.rever.boss.plugin.ui.BossDarkTextSecondary
 import ai.rever.boss.plugin.ui.BossTheme
+import ai.rever.boss.plugin.ui.BossThemeColors
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
@@ -103,7 +99,7 @@ private fun GitLogView(viewModel: GitLogViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(BossDarkBackground)
+            .background(BossThemeColors.BackgroundColor)
     ) {
         // Toolbar
         GitLogToolbar(
@@ -112,7 +108,7 @@ private fun GitLogView(viewModel: GitLogViewModel) {
             commitCount = commitLog.size
         )
 
-        Divider(color = BossDarkBorder, thickness = 1.dp)
+        Divider(color = BossThemeColors.BorderColor, thickness = 1.dp)
 
         if (!isGitRepository) {
             Box(
@@ -121,7 +117,7 @@ private fun GitLogView(viewModel: GitLogViewModel) {
             ) {
                 Text(
                     text = "Not a Git repository",
-                    color = BossDarkTextSecondary,
+                    color = BossThemeColors.TextSecondary,
                     fontSize = 14.sp
                 )
             }
@@ -132,7 +128,7 @@ private fun GitLogView(viewModel: GitLogViewModel) {
             ) {
                 Text(
                     text = "No commits yet",
-                    color = BossDarkTextSecondary,
+                    color = BossThemeColors.TextSecondary,
                     fontSize = 14.sp
                 )
             }
@@ -170,7 +166,7 @@ private fun GitLogView(viewModel: GitLogViewModel) {
         if (isLoading) {
             LinearProgressIndicator(
                 modifier = Modifier.fillMaxWidth(),
-                color = BossDarkAccent
+                color = BossThemeColors.AccentColor
             )
         }
     }
@@ -190,12 +186,12 @@ private fun GitLogView(viewModel: GitLogViewModel) {
             contentAlignment = Alignment.BottomCenter
         ) {
             Surface(
-                color = if (isError) Color(0xFFB00020) else Color(0xFF2E7D32),
+                color = if (isError) BossThemeColors.ErrorColor else BossThemeColors.SuccessColor,
                 shape = RoundedCornerShape(4.dp)
             ) {
                 Text(
                     text = msg,
-                    color = Color.White,
+                    color = BossThemeColors.TextPrimary,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                     fontSize = 12.sp
                 )
@@ -221,7 +217,7 @@ private fun GitLogToolbar(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = "Commit History",
-                color = BossDarkTextPrimary,
+                color = BossThemeColors.TextPrimary,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium
             )
@@ -229,7 +225,7 @@ private fun GitLogToolbar(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "($commitCount)",
-                    color = BossDarkTextSecondary,
+                    color = BossThemeColors.TextSecondary,
                     fontSize = 11.sp
                 )
             }
@@ -243,7 +239,7 @@ private fun GitLogToolbar(
             Icon(
                 imageVector = Icons.Outlined.Refresh,
                 contentDescription = "Refresh",
-                tint = BossDarkTextSecondary,
+                tint = BossThemeColors.TextSecondary,
                 modifier = Modifier.size(16.dp)
             )
         }
@@ -266,7 +262,7 @@ private fun CommitRow(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .background(if (isExpanded) BossDarkBackground.copy(alpha = 0.7f) else Color.Transparent)
+            .background(if (isExpanded) BossThemeColors.BackgroundColor.copy(alpha = 0.7f) else Color.Transparent)
     ) {
         // Main row
         Row(
@@ -278,7 +274,7 @@ private fun CommitRow(
             // Commit hash
             Text(
                 text = commit.shortHash,
-                color = BossDarkAccent,
+                color = BossThemeColors.AccentColor,
                 fontSize = 11.sp,
                 fontFamily = FontFamily.Monospace,
                 fontWeight = FontWeight.Medium,
@@ -290,7 +286,7 @@ private fun CommitRow(
             // Subject
             Text(
                 text = commit.subject,
-                color = BossDarkTextPrimary,
+                color = BossThemeColors.TextPrimary,
                 fontSize = 12.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -327,7 +323,7 @@ private fun CommitRow(
             // Author
             Text(
                 text = commit.author,
-                color = BossDarkTextSecondary,
+                color = BossThemeColors.TextSecondary,
                 fontSize = 11.sp,
                 maxLines = 1,
                 modifier = Modifier.widthIn(max = 100.dp),
@@ -339,7 +335,7 @@ private fun CommitRow(
             // Date
             Text(
                 text = dateFormat.format(Date(commit.date * 1000)),
-                color = BossDarkTextSecondary,
+                color = BossThemeColors.TextSecondary,
                 fontSize = 10.sp
             )
         }
@@ -355,12 +351,12 @@ private fun CommitRow(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = "Hash: ",
-                        color = BossDarkTextSecondary,
+                        color = BossThemeColors.TextSecondary,
                         fontSize = 11.sp
                     )
                     Text(
                         text = commit.hash,
-                        color = BossDarkTextPrimary,
+                        color = BossThemeColors.TextPrimary,
                         fontSize = 11.sp,
                         fontFamily = FontFamily.Monospace
                     )
@@ -371,7 +367,7 @@ private fun CommitRow(
                         Icon(
                             imageVector = Icons.Outlined.ContentCopy,
                             contentDescription = "Copy hash",
-                            tint = BossDarkTextSecondary,
+                            tint = BossThemeColors.TextSecondary,
                             modifier = Modifier.size(12.dp)
                         )
                     }
@@ -380,7 +376,7 @@ private fun CommitRow(
                 // Author email
                 Text(
                     text = "Author: ${commit.author} <${commit.authorEmail}>",
-                    color = BossDarkTextSecondary,
+                    color = BossThemeColors.TextSecondary,
                     fontSize = 11.sp
                 )
 
@@ -415,7 +411,7 @@ private fun CommitRow(
             }
         }
 
-        Divider(color = BossDarkBorder.copy(alpha = 0.5f), thickness = 0.5.dp)
+        Divider(color = BossThemeColors.BorderColor.copy(alpha = 0.5f), thickness = 0.5.dp)
     }
 }
 
