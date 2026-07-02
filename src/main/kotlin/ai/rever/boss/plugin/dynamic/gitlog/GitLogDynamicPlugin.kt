@@ -25,5 +25,11 @@ class GitLogDynamicPlugin : DynamicPlugin {
         context.panelRegistry.registerPanel(GitLogInfo) { ctx, panelInfo ->
             GitLogComponent(ctx, panelInfo, gitDataProvider)
         }
+        // Contribute git_log/cherry_pick/revert MCP tools; auto-removed on disable/unload.
+        context.registerMcpToolProvider(GitLogMcpToolProvider(pluginId, gitDataProvider))
+    }
+
+    override fun dispose() {
+        gitDataProvider = null
     }
 }
